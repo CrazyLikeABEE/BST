@@ -160,60 +160,6 @@ public class BST<E extends Comparable<E>>{
 	        }
 	        return (node.data);
 	}
-	
-//	private E minHelper(Node root) {
-//
-//		//Node newNode = new Node();
-//		//Check the data to see if already in tree.
-//		int value =  root.data.compareTo(root.left.data);
-//
-//		if(value <= 0) {
-//			//Check to see if left child node exists if not...
-//			if(root.left == null) {
-//				
-//				System.out.println("Min: " + root.data);
-//
-//			}else {
-//
-//				//If left child already exists continue going left.
-//				minHelper(root.left);
-//			}
-//		}
-//		
-//		System.out.println("Min: " + root.left.data);
-//		//Have to return data of the least value.
-//		return null;
-//		
-//	}
-
-//		public void min(E item) {
-//			
-//			Node min = minHelper(root, item);
-//			
-//			if(min == null) {
-//				
-//				System.out.println("Nothing in the tree.");
-//			}
-//			else {
-//				
-//				System.out.println("Min: " + min.data);
-//			}
-//		}
-//	private Node minHelper(Node root, E item) {
-//
-//		if(root == null || root.data == item) {
-//
-//			return root;
-//		}
-//
-//		if(root.data.compareTo(item) <= 0) {
-//
-//			return minHelper(root.left, item);
-//
-//		}
-//
-//		return minHelper(root.left, item);
-//	}
 
 	//Maximum of subtree starting at root.
 	public void max() {
@@ -419,36 +365,6 @@ public class BST<E extends Comparable<E>>{
 		}
 	}
 
-//	public void delete(E item) {
-//		root = delHelper(root, item);
-//		System.out.println(item + " successfully deleted!");
-//	}
-//
-//	private Node delHelper(Node root, E item) {
-//		int value = item.compareTo(root.data);
-//		if(root == null) 
-//			return root;
-//		if(value < 0) 
-//			root.left = delHelper(root.left, root.data);
-//		else if(value > 0) 
-//			root.right = delHelper(root.right, root.data);
-//
-//		else {
-//			if(root.left == null) 
-//				return root.right;
-//			else if(root.right == null) 
-//				return root.left;
-//			// node with two children: Get the inorder successor (smallest
-//			// in the right subtree)
-//			root.data = minHelper(root.right);
-//
-//			// Delete the inorder successor
-//			root.right = delHelper(root.right, root.data);
-//		}
-//		return root;
-//
-//	}
-	
 	//Remove everything from tree.
 	public void clearAll() {
 		
@@ -460,19 +376,7 @@ public class BST<E extends Comparable<E>>{
 			root.right = null;
 			root = null;
 		}
-		//clearAllHelper(root);
-		
 	}
-	
-//	private void clearAllHelper(Node root) {
-//		
-//		if(root != null) {
-//			
-//			clearAllHelper(root.left);
-//			clearAllHelper(root.right);
-//			root = null;
-//		}
-//	}
 
 	//Check if tree is empty.
 	public void isEmpty() {
