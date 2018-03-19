@@ -235,9 +235,64 @@ public class BST<E extends Comparable<E>>{
 		return newNode;
 	}
 
-	public Node preduccessor(Node root, E item) {
-		return null;//Have to return something, not null.
-	}
+	public void preduccessor(E item) {
+			
+			Node found = searchHelper(root, item);
+			
+			if(found == null) {
+				
+				System.out.println(item +" not in tree.");
+			}else {
+			
+			preduccessorHelper(root, item);
+			
+			System.out.println("Preduccessor of " + item + " is: "+ root.data);
+			
+			}
+		}
+		
+		private Node preduccessorHelper(Node root, E item) {
+			
+			//Initializing a node.
+			Node newNode = new Node();
+			
+			//Using search method to locate the node in question.
+			Node preduccessor = searchHelper(root, item);
+			
+			//Check if tree is empty.
+			if(preduccessor == null) {
+				return null;
+			}
+			
+			//Node has a right subtree
+			if(preduccessor.left != null) {
+				
+				newNode = preduccessor.left;
+				
+				//Finding successor by going through the right of subtree
+				while(newNode.right != null) {
+					
+//					return (BST<E>.Node) minHelper(newNode.left);
+					newNode = newNode.right;
+					return newNode;
+				}
+			}else{   //No right subtree
+				
+				Node ancestor = new Node();
+				ancestor = root;
+				
+				while(ancestor != preduccessor) {
+					if(ancestor.right != null) {
+						newNode = ancestor; //This is the successor.
+						ancestor = ancestor.right;
+					}else {
+						ancestor = ancestor.left;
+					}
+				}
+				return newNode;
+			}
+			return newNode;
+		}
 
 	///////////////// Different tree traversals (preorder, inorder and postorder) /////////////////
 	
@@ -425,9 +480,6 @@ public static void main(String[] args) {
 	tree.postorder();
 	tree.isEmpty();
 	tree.clearAll();
-	tree.isEmpty();
-
-	
-}
-
+	tree.isEmpty();	
+	}
 }
