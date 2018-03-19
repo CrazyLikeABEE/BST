@@ -368,24 +368,87 @@ public class BST<E extends Comparable<E>>{
 	public void delete(E item) {
 		
 		deleteHelper(root, item);
+		System.out.println(item + " deleted.");
 	}
 	
 	//Deletes the item from the tree.
-	private void deleteHelper(Node root, E item) {
+	private Node deleteHelper(Node root, E item) {
 
 		Node newNode = new Node();
-		
-		if(root == null) {
-			return;
-		}
-		if(item == root.data) {
-//
-//			newNode = root;
-//			root.left = newNode;
-			root = null;
+		//If tree is empty
+		if(root == null ) {
+			return null;
+		}else if(root.left != null ){ //Delete left
+
+			deleteHelper(root.left, item);
+			return root.left;
+
+		}else if(root.right != null){ //Delete right
+
+			deleteHelper(root.right, item);
+			return root.right;
+		}else {
+
+			//Delete leaf nodes (No Child)
+			if(root.left == null && root.right ==null) {
+
+				root = null;
+
+			}else if(root.left == null) { //Delete node with only one child (right child).
+
+				newNode = root;
+				root = root.right;
+				newNode = null;
+
+			}else if(root.right == null) { //Delete node with only one child (left child).
+
+				newNode = root;
+				root = root.left;
+				newNode = null;
+
+			}else { //Delete node with two children.
+
+				newNode = (BST<E>.Node) minHelper(root.right);
+				root.data = newNode.data;
+				root.right = null;
+				newNode.data = null;
+			}
+			
+			return root;
+
 		}
 	}
 
+//	public void delete(E item) {
+//		root = delHelper(root, item);
+//		System.out.println(item + " successfully deleted!");
+//	}
+//
+//	private Node delHelper(Node root, E item) {
+//		int value = item.compareTo(root.data);
+//		if(root == null) 
+//			return root;
+//		if(value < 0) 
+//			root.left = delHelper(root.left, root.data);
+//		else if(value > 0) 
+//			root.right = delHelper(root.right, root.data);
+//
+//		else {
+//			if(root.left == null) 
+//				return root.right;
+//			else if(root.right == null) 
+//				return root.left;
+//			// node with two children: Get the inorder successor (smallest
+//			// in the right subtree)
+//			root.data = minHelper(root.right);
+//
+//			// Delete the inorder successor
+//			root.right = delHelper(root.right, root.data);
+//		}
+//		return root;
+//
+//	}
+	
 	//Remove everything from tree.
 	public void clearAll() {
 		
@@ -446,7 +509,7 @@ public static void main(String[] args) {
 	tree.search(Integer.valueOf(3));
 	tree.search(Integer.valueOf(100));
 	
-	tree.delete(5);
+	tree.delete(13);
 	tree.successor(2);
 	
 	tree.preorder();
