@@ -149,41 +149,84 @@ public class BST<E extends Comparable<E>>{
 
 	//Minimum of subtree starting at root.
 	public void min() {
-		
-		minHelper(root);
-		System.out.println(root.left.data);
+		System.out.println("Min: " + minHelper(root));
 	}
 	
-	private E minHelper(Node root) {
+	private E minHelper(Node node) {
 
-		Node newNode = new Node();
-		//Check the data to see if already in tree.
-		int value =  root.data.compareTo(root.left.data);
-
-		if(value <= 0) {
-			//Check to see if left child node exists if not...
-			if(root.left == null) {
-
-				return root.data;
-
-			}else {
-
-				//If left child already exists continue going left.
-				minHelper(root.left);
-			}
-		}
-		
-		return root.left.data;//Have to return data of the least value.
-		
+	       //Go down the left
+	        while (node.left != null) {
+	            node = node.left;
+	        }
+	        return (node.data);
 	}
+	
+//	private E minHelper(Node root) {
+//
+//		//Node newNode = new Node();
+//		//Check the data to see if already in tree.
+//		int value =  root.data.compareTo(root.left.data);
+//
+//		if(value <= 0) {
+//			//Check to see if left child node exists if not...
+//			if(root.left == null) {
+//				
+//				System.out.println("Min: " + root.data);
+//
+//			}else {
+//
+//				//If left child already exists continue going left.
+//				minHelper(root.left);
+//			}
+//		}
+//		
+//		System.out.println("Min: " + root.left.data);
+//		//Have to return data of the least value.
+//		return null;
+//		
+//	}
 
+//		public void min(E item) {
+//			
+//			Node min = minHelper(root, item);
+//			
+//			if(min == null) {
+//				
+//				System.out.println("Nothing in the tree.");
+//			}
+//			else {
+//				
+//				System.out.println("Min: " + min.data);
+//			}
+//		}
+//	private Node minHelper(Node root, E item) {
+//
+//		if(root == null || root.data == item) {
+//
+//			return root;
+//		}
+//
+//		if(root.data.compareTo(item) <= 0) {
+//
+//			return minHelper(root.left, item);
+//
+//		}
+//
+//		return minHelper(root.left, item);
+//	}
 
 	//Maximum of subtree starting at root.
-	public E max(Node root) {
-		
-		
-			
-		return null;//Have to return something, not null.
+	public void max() {
+		System.out.println("Max: " + maxHelper(root));
+	}
+	
+	private E maxHelper(Node node) {
+
+	       //Go down the left
+	        while (node.right != null) {
+	            node = node.right;
+	        }
+	        return (node.data);
 	}
 
 	//Successor of node with element item and the head of the subtree is at root
@@ -204,7 +247,7 @@ public class BST<E extends Comparable<E>>{
 		
 		if(root == null) {
 			
-			System.out.println("root null");
+			System.out.println("Tree is empty!");
 		}
 		
 		preorderHelper(root);
@@ -228,7 +271,7 @@ public class BST<E extends Comparable<E>>{
 		
 		if(root == null) {
 			
-			System.out.println("root null");
+			System.out.println("Tree is empty!");
 		}
 		
 		inorderHelper(root);
@@ -247,21 +290,81 @@ public class BST<E extends Comparable<E>>{
 	//Start at the left, then the right and finish at root.
 	public void postorder() {
 
+		System.out.println("Postorder:");
+
+		if(root == null) {
+
+			System.out.println("Tree is empty!");
+		}
+
+		postorderHelper(root);
+
+	}
+	private void postorderHelper(Node root) {
+
+		if(root != null) {
+
+			postorderHelper(root.left);
+			postorderHelper(root.right);
+			System.out.println(root.data);
+		}
 	}
 
-	//Deletes the item from the tree.
 	public void delete(E item) {
+		
+		deleteHelper(root, item);
+	}
+	
+	//Deletes the item from the tree.
+	private void deleteHelper(Node root, E item) {
 
+		Node newNode = new Node();
+		
+		if(item == root.data) {
+//
+//			newNode = root;
+//			root.left = newNode;
+			root = null;
+		}
 	}
 
 	//Remove everything from tree.
 	public void clearAll() {
-
+		
+		System.out.println("Clearing things up...");
+		
+		if(root != null) {
+			
+			root.left = null;
+			root.right = null;
+			root = null;
+		}
+		//clearAllHelper(root);
+		
 	}
+	
+//	private void clearAllHelper(Node root) {
+//		
+//		if(root != null) {
+//			
+//			clearAllHelper(root.left);
+//			clearAllHelper(root.right);
+//			root = null;
+//		}
+//	}
 
 	//Check if tree is empty.
 	public void isEmpty() {
-
+	
+		if(root == null) {
+			
+			System.out.println("Tree is empty!");
+			
+		}else {
+			System.out.println("There is something here...");
+		}
+	
+		return;
 	}
 
 public static void main(String[] args) {
@@ -271,6 +374,7 @@ public static void main(String[] args) {
 
 	BST <Integer> tree = new BST<Integer>();
 	
+	tree.isEmpty();
 	tree.add(Integer.valueOf(4));
 	tree.add(Integer.valueOf(3));
 	tree.add(Integer.valueOf(5));
@@ -284,12 +388,20 @@ public static void main(String[] args) {
 	tree.search(Integer.valueOf(3));
 	tree.search(Integer.valueOf(100));
 	
+	tree.delete(5);
+	
 	tree.preorder();
 	tree.size();
 	tree.height();
 	tree.min();
+	tree.max();
 	
+	tree.postorder();
+	tree.isEmpty();
+	tree.clearAll();
+	tree.isEmpty();
 
+	
 }
 
 }
