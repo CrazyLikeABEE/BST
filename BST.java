@@ -17,7 +17,7 @@ public class BST<E extends Comparable<E>>{
 
 		Node(){
 			left = null;
-			right =null;
+			right = null;
 			data = null;
 		}
 	}
@@ -230,8 +230,63 @@ public class BST<E extends Comparable<E>>{
 	}
 
 	//Successor of node with element item and the head of the subtree is at root
-	public Node successor(Node root, E item) {
-		return null;//Have to return something, not null.
+	public void successor(E item) {
+		
+		Node found = searchHelper(root, item);
+		
+		if(found == null) {
+			
+			System.out.println(item +" not in tree.");
+		}else {
+		
+		successorHelper(root, item);
+		
+		System.out.println("Successor of " + item + " is: "+ root.data);
+		
+		}
+	}
+	
+	private Node successorHelper(Node root, E item) {
+		
+		//Initializing a node.
+		Node newNode = new Node();
+		
+		//Using search method to locate the node in question.
+		Node successor = searchHelper(root, item);
+		
+		//Check if tree is empty.
+		if(successor == null) {
+			return null;
+		}
+		
+		//Node has a right subtree
+		if(successor.right != null) {
+			
+			newNode = successor.right;
+			
+			//Finding successor by going through the left of subtree
+			while(newNode.left != null) {
+				
+//				return (BST<E>.Node) minHelper(newNode.right);
+				newNode = newNode.left;
+				return newNode;
+			}
+		}else{   //No right subtree
+			
+			Node ancestor = new Node();
+			ancestor = root;
+			
+			while(ancestor != successor) {
+				if(ancestor.left != null) {
+					newNode = ancestor; //This is the successor.
+					ancestor = ancestor.left;
+				}else {
+					ancestor = ancestor.right;
+				}
+			}
+			return newNode;
+		}
+		return newNode;
 	}
 
 	public Node preduccessor(Node root, E item) {
@@ -320,6 +375,9 @@ public class BST<E extends Comparable<E>>{
 
 		Node newNode = new Node();
 		
+		if(root == null) {
+			return;
+		}
 		if(item == root.data) {
 //
 //			newNode = root;
@@ -376,12 +434,12 @@ public static void main(String[] args) {
 	
 	tree.isEmpty();
 	tree.add(Integer.valueOf(4));
-	tree.add(Integer.valueOf(3));
-	tree.add(Integer.valueOf(5));
-	tree.add(Integer.valueOf(1));
+	tree.add(Integer.valueOf(13));
+	tree.add(Integer.valueOf(9));
+	tree.add(Integer.valueOf(10));
 	tree.add(Integer.valueOf(2));
 	tree.add(Integer.valueOf(6));
-	tree.add(Integer.valueOf(7));
+	tree.add(Integer.valueOf(78));
 	
 	tree.inorder();
 	
@@ -389,6 +447,7 @@ public static void main(String[] args) {
 	tree.search(Integer.valueOf(100));
 	
 	tree.delete(5);
+	tree.successor(2);
 	
 	tree.preorder();
 	tree.size();
